@@ -1,3 +1,5 @@
+import { guardarTarea } from "./local/guardar.js";
+
 const inputTarea = document.querySelector('#nueva-tarea');
 const selectPrioridad = document.querySelector('#prioridad');
 const btnAgregar = document.querySelector('#btn-agregar');
@@ -17,6 +19,8 @@ btnAgregar.addEventListener('click', function(event) {
     alert('Por favor, selecciona una prioridad.');
     return;
   }
+
+  guardarTarea({ texto: tarea, prioridad: prioridad });
 
   const tarjeta = document.createElement('div');
   tarjeta.classList.add('tarea', prioridad);
