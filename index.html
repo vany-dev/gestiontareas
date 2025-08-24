@@ -1,121 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Tareas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        
-        .container {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        input[type="text"] {
-            padding: 10px;
-            width: 70%;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        button {
-            padding: 10px 15px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background: #45a049;
-        }
-        
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-        
-        li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .completed {
-            text-decoration: line-through;
-            color: #888;
-        }
-        
-        .delete-btn {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Mi Lista de Tareas</h1>
-        
-        <div class="input-section">
-            <input type="text" id="taskInput" placeholder="Escribe una nueva tarea...">
-            <button onclick="addTask()">Agregar</button>
+    <link rel="stylesheet" href="src/css/normalize.css" />
+    <link rel="stylesheet" href="src/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Gestión de Tareas</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nueva_tarea.html">Tarea</a></li>
+          <!-- <li><a href="tareas_completadas.html">Tareas Completadas</a></li> -->
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+        <div class="aside">
+          <h2>Lista de actividades</h2>
+          <ul id="lista-tareas">
+            <!-- Las tareas se agregarán aquí dinámicamente -->
+            <li><a href="#">Tareas rapidas</a></li>
+            <li><a href="#">Super</a></li>
+          </ul>
         </div>
-        
-        <ul id="taskList"></ul>
-    </div>
 
-    <script>
-        function addTask() {
-            const taskInput = document.getElementById('taskInput');
-            const taskText = taskInput.value.trim();
-            
-            if (taskText === '') return;
-            
-            const taskList = document.getElementById('taskList');
-            const li = document.createElement('li');
-            
-            li.innerHTML = `
-                <span>${taskText}</span>
-                <button class="delete-btn" onclick="deleteTask(this)">Eliminar</button>
-            `;
-            
-            li.addEventListener('click', function() {
-                this.querySelector('span').classList.toggle('completed');
-            });
-            
-            taskList.appendChild(li);
-            taskInput.value = '';
-            taskInput.focus();
-        }
-        
-        function deleteTask(button) {
-            const li = button.parentElement;
-            li.remove();
-        }
-        
-        // Permitir agregar tareas con Enter
-        document.getElementById('taskInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addTask();
-            }
-        });
-    </script>
-</body>
+        <div class="main-content">
+
+          <div class="crear-tarea">
+            <h2>Crear tarea</h2>
+            <form id="formulario-tarea">
+              <label for="tarea">Tarea</label>
+              <input
+                type="text"
+                id="nueva-tarea"
+                placeholder="Nombre de la tarea"
+              />
+              <label for="prioridad">Prioridad</label>
+              <select id="prioridad">
+                <option value="" disabled selected>-- Seleccione --</option>
+                <option value="alta">Alta</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+              </select>
+              <button type="submit">Agregar</button>
+            </form>
+          </div>
+
+            <div class="tareas">
+                <h2>Tareas</h2>
+                <div class="tareas-tarjetas">
+                    <div class="tarea">
+                        <p>Tarea de ejemplo</p>
+                        <p class="prioridad alta">Alta</p>
+                        <button class="eliminar">Eliminar</button>
+                    </div>
+                    <div class="tarea">
+                        <p>Tarea de ejemplo</p>
+                        <p class="prioridad alta">Alta</p>
+                        <button class="eliminar">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+      </div>
+    </main>
+    <script></script>
+  </body>
 </html>

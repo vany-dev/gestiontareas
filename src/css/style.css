@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+ul li, a {
+    text-decoration: none;
+    list-style: none;
+    color: #333;
+}
+h1, h2 {
+    margin: 0;
+}
+
+/* Header */
+header {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fdfdfd;
+    padding: 10px 0;
+    text-align: center;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+header nav ul {
+    display: flex;
+    gap: 20px;
+}
+header nav ul li a {
+    font-weight: bold;
+    transition: color 0.3s;
+    padding: 7px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+header nav ul li a:hover {
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Main */
+main {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+main .container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 15px;
+    background-color: #fff;
+    margin: 15px auto;
+}
+
+/* ASIDE */
+
+main .container .aside {
+    width: 25%;
+    background-color: #fdfdfd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+main .container .aside h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+main .container .aside ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+main .container .aside ul li a {
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    transition: all 0.3s ease;
+}
+main .container .aside ul li a:hover {
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* MAIN CONTENT */
+main .container .main-content {
+    width: 70%;
+    background-color: #fdfdfd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main .container .main-content .crear-tarea h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+main .container .main-content form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+main .container .main-content form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+main .container .main-content form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    cursor: pointer;
+}
+main .container .main-content form select option {
+    padding: 10px;
+}
+
+main .container .main-content form input:focus,
+main .container .main-content form select:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.5);
+}
+main .container .main-content form input::placeholder {
+    color: #999;
+}
+main .container .main-content form label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+main .container .main-content form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+main .container .main-content form button:hover {
+    background-color: #555;
+}
+
+main .container .main-content .tareas {
+    margin-top: 30px;
+}
+main .container .main-content .tareas h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+main .container .main-content .tareas .tareas-tarjetas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+main .container .main-content .tareas .tareas-tarjetas .tarea {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+}
+main .container .main-content .tareas .tareas-tarjetas .tarea p {
+    font-size: 16px;
+    font-weight: 500;
+}
+main .container .main-content .tareas .tareas-tarjetas .tarea button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #e74c3c;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+main .container .main-content .tareas .tareas-tarjetas .tarea button:hover {
+    background-color: #c0392b;
+}
