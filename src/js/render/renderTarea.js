@@ -1,75 +1,84 @@
-import { eliminarTarea, toggleCompletada, obtenerEstadisticas, obtenerTareas } from "../local/dataTarea.js";
+import { eliminarTarea, toggleCompletada, obtenerTareas } from "../local/dataTarea.js";
 
-const listaTareas = document.querySelector('#tareas-tarjetas');
+let listaActual = 'TR';
 
-// Eliminamos la función actualizarContador de aquí ya que ahora está en index.js
-// y se pasa como callback cuando sea necesario
+export function setListaActual(listaId) {
+  listaActual = listaId;
+}
+
+export function getListaActual() {
+  return listaActual;
+}
 
 export default function crearTarjeta(data) {
-    const { text, prioridad, id, completada, fecha } = data;
-    
-    const tarjeta = document.createElement('div');
-    tarjeta.classList.add('tarea', prioridad);
-    if (completada) tarjeta.classList.add('completada');
+  const { text, prioridad, id, completada, fecha, listaId } = data;
 
-    // Contenido de la tarjeta
-    tarjeta.innerHTML = `
-        <div class="tarea-contenido">
-            <div class="tarea-header">
-                <span class="prioridad-badge">${prioridad.toUpperCase()}</span>
-                <span class="fecha">${fecha}</span>
-            </div>
-            <p class="tarea-texto">${text}</p>
-            <div class="tarea-acciones">
-                <button class="btn-completar">${completada ? '↩️ Rehacer' : '✅ Completar'}</button>
-                <button class="btn-eliminar">🗑️ Eliminar</button>
-            </div>
-        </div>
-    `;
+  const tarjeta = document.createElement('div');
+  tarjeta.classList.add('tarea', prioridad);
+  if (completada) tarjeta.classList.add('completada');
 
-    // Event listeners
-    const btnEliminar = tarjeta.querySelector('.btn-eliminar');
-    const btnCompletar = tarjeta.querySelector('.btn-completar');
+  tarjeta.innerHTML = `
+    <div class="tarea-contenido">
+      <div class="tarea-header">
+        <span class="prioridad-badge">${prioridad.toUpperCase()}</span>
+        <span class="fecha">${fecha}</span>
+        ${listaId && listaId !== 'TR' ? `<span class="lista-badge">${listaId.split('-')[0]}</span>` : ''}
+      </div>
+      <p class="tarea-texto">${text}</p>
+      <div class="tarea-acciones">
+        <button class="btn-completar">${completada ? '↩️ Rehacer' : '✅ Completar'}</button>
+        <button class="btn-eliminar">🗑️ Eliminar</button>
+      </div>
+    </div>
+  `;
 
-    btnEliminar.addEventListener('click', function() {
-        if (confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
-            eliminarTarea(id);
-            tarjeta.remove();
-            // El contador se actualizará externamente
-            if (typeof window.actualizarContador === 'function') {
-                window.actualizarContador();
-            }
-        }
-    });
+  const btnEliminar = tarjeta.querySelector('.btn-eliminar');
+  const btnCompletar = tarjeta.querySelector('.btn-completar');
 
-    btnCompletar.addEventListener('click', function() {
-        toggleCompletada(id);
-        tarjeta.classList.toggle('completada');
-        btnCompletar.textContent = tarjeta.classList.contains('completada') ? '↩️ Rehacer' : '✅ Completar';
-        // El contador se actualizará externamente
-        if (typeof window.actualizarContador === 'function') {
-            window.actualizarContador();
-        }
-    });
+  btnEliminar.addEventListener('click', () => {
+    if (confirm('¿Eliminar esta tarea?')) {
+      eliminarTarea(id, listaActual);
+      tarjeta.remove();
+      window.actualizarContador?.();
+    }
+  });
 
-    return tarjeta;
+  btnCompletar.addEventListener('click', () => {
+    toggleCompletada(id, listaActual);
+    tarjeta.classList.toggle('completada');
+    btnCompletar.textContent = tarjeta.classList.contains('completada')
+      ? '↩️ Rehacer'
+      : '✅ Completar';
+    window.actualizarContador?.();
+  });
+
+  return tarjeta;
 }
 
-// Función para cargar todas las tareas
 export function cargarTareas() {
-    const tareas = obtenerTareas();
-    listaTareas.innerHTML = '';
-    
-    tareas.forEach(tarea => {
-        const tarjeta = crearTarjeta(tarea);
-        listaTareas.appendChild(tarjeta);
-    });
+  const listaTareasElement = document.querySelector('#tareas-tarjetas');
+  const tareas = obtenerTareas(listaActual);
+  listaTareasElement.innerHTML = '';
+
+  if (tareas.length === 0) {
+    listaTareasElement.innerHTML = `
+      <div class="tarea-vacia">
+        <p>No hay tareas en esta lista</p>
+        <small>¡Agrega tu primera tarea usando el formulario arriba!</small>
+      </div>
+    `;
+    return;
+  }
+
+  tareas.forEach(tarea => {
+    const tarjeta = crearTarjeta(tarea);
+    listaTareasElement.appendChild(tarjeta);
+  });
 }
 
-// Función para limpiar tareas completadas
 export function limpiarCompletadas() {
-    const tareas = obtenerTareas();
-    const incompletas = tareas.filter(t => !t.completada);
-    localStorage.setItem('tareasRapidas', JSON.stringify(incompletas));
-    cargarTareas();
+  const tareas = obtenerTareas(listaActual);
+  const incompletas = tareas.filter(t => !t.completada);
+  localStorage.setItem('tareas_' + listaActual, JSON.stringify(incompletas));
+  cargarTareas();
 }

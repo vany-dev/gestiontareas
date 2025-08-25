@@ -19,14 +19,27 @@
     </header>
     <main>
         <div class="container">
+            <!-- En la sección del aside -->
             <div class="aside">
-                <h2>Lista de actividades</h2>
-                <ul id="lista-tareas">
-                    <li><a href="#" class="categoria-activa">Tareas rápidas</a></li>
-                    <li><a href="#">Supermercado</a></li>
-                    <li><a href="#">Trabajo</a></li>
-                    <li><a href="#">Personal</a></li>
+                <h2>Mis Listas</h2>
+                <ul id="lista-actividades">
+                    <li><a href="#" class="categoria-activa" data-lista="TR">Tareas rápidas</a></li>
+                    <!-- Las demás listas se agregarán dinámicamente -->
                 </ul>
+                
+                <!-- Formulario para crear nuevas listas -->
+                <div class="crear-lista">
+                    <h3>Crear nueva lista</h3>
+                    <form id="formulario-lista">
+                        <input
+                            type="text"
+                            id="nueva-lista"
+                            placeholder="Nombre de la lista"
+                            required
+                        />
+                        <button type="submit">➕</button>
+                    </form>
+                </div>
             </div>
 
             <div class="main-content">

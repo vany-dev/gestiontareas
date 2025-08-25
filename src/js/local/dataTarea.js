@@ -1,74 +1,80 @@
-// Se almacenan las tareas rapidas en localStorage
-const TAREAS_RAPIDAS = 'tareasRapidas';
+// --- GESTIÓN DE LISTAS ---
+const LISTAS_KEY = 'listas';
 
-// Función para obtener tareas con verificación
-export function obtenerTareas() {
-    try {
-        const tareas = JSON.parse(localStorage.getItem(TAREAS_RAPIDAS)) || [];
-        return Array.isArray(tareas) ? tareas : [];
-    } catch (error) {
-        console.error('Error al obtener tareas:', error);
-        return [];
-    }
+// Obtener todas las listas
+export function obtenerListas() {
+  try {
+    return JSON.parse(localStorage.getItem(LISTAS_KEY)) || [];
+  } catch {
+    return [];
+  }
 }
 
-// Función para guardar tareas
-export function guardarTarea(tarea) {
-    try {
-        const idTarea = 'TR-' + Date.now();
-        const nuevaTarea = {
-            id: idTarea,
-            fecha: new Date().toLocaleString(),
-            completada: false,
-            ...tarea
-        };
-        
-        const tareas = obtenerTareas();
-        tareas.push(nuevaTarea);
-        localStorage.setItem(TAREAS_RAPIDAS, JSON.stringify(tareas));
-        return nuevaTarea;
-    } catch (error) {
-        console.error('Error al guardar tarea:', error);
-        throw error;
-    }
+// Guardar nueva lista
+export function guardarLista(nombre) {
+  const listas = obtenerListas();
+  const nuevaLista = {
+    id: 'L-' + Date.now(),
+    nombre
+  };
+  listas.push(nuevaLista);
+  localStorage.setItem(LISTAS_KEY, JSON.stringify(listas));
+  return nuevaLista;
 }
 
-// Función para eliminar tarea
-export function eliminarTarea(id) {
-    try {
-        const tareas = obtenerTareas();
-        const tareasFiltradas = tareas.filter(tarea => tarea.id !== id);
-        localStorage.setItem(TAREAS_RAPIDAS, JSON.stringify(tareasFiltradas));
-        return tareasFiltradas;
-    } catch (error) {
-        console.error('Error al eliminar tarea:', error);
-        throw error;
-    }
+// Eliminar lista y sus tareas
+export function eliminarLista(id) {
+  const listas = obtenerListas().filter(l => l.id !== id);
+  localStorage.setItem(LISTAS_KEY, JSON.stringify(listas));
+  localStorage.removeItem('tareas_' + id);
 }
 
-// Función para marcar tarea como completada
-export function toggleCompletada(id) {
-    try {
-        const tareas = obtenerTareas();
-        const tareasActualizadas = tareas.map(tarea => 
-            tarea.id === id 
-                ? { ...tarea, completada: !tarea.completada }
-                : tarea
-        );
-        localStorage.setItem(TAREAS_RAPIDAS, JSON.stringify(tareasActualizadas));
-        return tareasActualizadas;
-    } catch (error) {
-        console.error('Error al actualizar tarea:', error);
-        throw error;
-    }
+// --- GESTIÓN DE TAREAS ---
+export function obtenerTareas(listaId = 'TR') {
+  try {
+    return JSON.parse(localStorage.getItem('tareas_' + listaId)) || [];
+  } catch {
+    return [];
+  }
 }
 
-// Función para obtener estadísticas
-export function obtenerEstadisticas() {
-    const tareas = obtenerTareas();
-    return {
-        total: tareas.length,
-        completadas: tareas.filter(t => t.completada).length,
-        pendientes: tareas.filter(t => !t.completada).length
-    };
+export function guardarTarea(tarea, listaId = 'TR') {
+  const idTarea = listaId + '-' + Date.now();
+  const nuevaTarea = {
+    id: idTarea,
+    fecha: new Date().toLocaleString(),
+    completada: false,
+    listaId,
+    ...tarea
+  };
+
+  const tareas = obtenerTareas(listaId);
+  tareas.push(nuevaTarea);
+  localStorage.setItem('tareas_' + listaId, JSON.stringify(tareas));
+  return nuevaTarea;
+}
+
+export function eliminarTarea(id, listaId = 'TR') {
+  const tareas = obtenerTareas(listaId);
+  const filtradas = tareas.filter(t => t.id !== id);
+  localStorage.setItem('tareas_' + listaId, JSON.stringify(filtradas));
+  return filtradas;
+}
+
+export function toggleCompletada(id, listaId = 'TR') {
+  const tareas = obtenerTareas(listaId);
+  const actualizadas = tareas.map(t =>
+    t.id === id ? { ...t, completada: !t.completada } : t
+  );
+  localStorage.setItem('tareas_' + listaId, JSON.stringify(actualizadas));
+  return actualizadas;
+}
+
+export function obtenerEstadisticas(listaId = 'TR') {
+  const tareas = obtenerTareas(listaId);
+  return {
+    total: tareas.length,
+    completadas: tareas.filter(t => t.completada).length,
+    pendientes: tareas.filter(t => !t.completada).length
+  };
 }

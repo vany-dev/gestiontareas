@@ -369,6 +369,106 @@ main .container .main-content .tareas .tareas-tarjetas {
     transform: translateY(-1px);
 }
 
+/* Estilos para el formulario de nueva lista */
+.crear-lista {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #a4c6e9;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.crear-lista h3 {
+    margin-bottom: 12px;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+#formulario-lista {
+    display: flex;
+    gap: 10px;
+}
+
+#nueva-lista {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+#formulario-lista button {
+    padding: 8px 15px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#formulario-lista button:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+}
+
+/* Estilos para los botones de eliminar lista */
+.btn-eliminar-lista {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    margin-left: 5px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+.btn-eliminar-lista:hover {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#lista-actividades li {
+    margin-bottom: 8px;
+}
+
+#lista-actividades li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+}
+
+
+/* Estilos para lista vacía */
+.tarea-vacia {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+}
+
+.tarea-vacia p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.tarea-vacia small {
+    font-size: 0.9rem;
+    color: #adb5bd;
+}
+
+/* Badge para identificar la lista */
+.lista-badge {
+    padding: 2px 8px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
 /* Responsive */
 @media (max-width: 968px) {
     main .container {
